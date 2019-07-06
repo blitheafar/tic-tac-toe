@@ -3,21 +3,37 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 //组件Square
-class Square extends React.Component {
-  render() {
-    return (
-      <button className="square">
-        {/* TODO */}
-        {this.props.value}
-      </button>
+function Square(props) {
+    return(
+        <button className="square" onClick={props.onClick}>
+          {props.value}
+        </button>
     );
-  }
 }
 
 //组件Board
 class Board extends React.Component {
+    constructor(props){
+        super(props);
+        this.state={
+            //设置长度为9的空值数组
+            squares: Array(9).fill(null),
+        };
+    }
+
+handleClick(i){
+    const squares=this.state.squares.slice();
+    squares[i]='X';
+    this.setState({squares: squares});
+}
+
   renderSquare(i) {
-    return <Square value={i}/>;
+    return (
+    <Square
+    value={this.state.squares[i]}
+    onClick={()=>this.handleClick(i)}
+    />
+    );
   }
 
   render() {
